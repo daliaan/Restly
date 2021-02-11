@@ -6,8 +6,22 @@
 
     <!--    ACTIONS    -->
 
-    <action android:id="@+id/go_to_splash"
-        app:destination="@id/splash_fragment"
+    <action android:id="@+id/go_to_restaurants"
+        app:destination="@id/restaurants_list_fragment"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"/>
+
+    <action android:id="@+id/go_to_products"
+        app:destination="@id/products_list_fragment"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"/>
+
+    <action android:id="@+id/go_to_cart"
+        app:destination="@id/cart_fragment"
         app:popEnterAnim="@anim/slide_in_left"
         app:popExitAnim="@anim/slide_out_right"
         app:enterAnim="@anim/slide_in_right"
@@ -18,5 +32,17 @@
     <fragment android:name="dalian.razvan.cucer.screens.splash.SplashFragment"
         android:label="splash_fragment"
         android:id="@+id/splash_fragment"/>
+
+    <fragment android:name="dalian.razvan.cucer.screens.restaurantsList.RestaurantsListFragment"
+        android:label="restaurants_list_fragment"
+        android:id="@+id/restaurants_list_fragment"/>
+
+    <fragment android:name="dalian.razvan.cucer.screens.productsList.ProductsListFragment"
+        android:label="products_list_fragment"
+        android:id="@+id/products_list_fragment"/>
+
+    <fragment android:name="dalian.razvan.cucer.screens.cart.CartFragment"
+        android:label="cart_fragment"
+        android:id="@+id/cart_fragment"/>
 
 </navigation>
