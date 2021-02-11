@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/navigation.xml">
+    android:id="@+id/navigation.xml"
+    app:startDestination="@id/splash_fragment">
+
+    <!--    ACTIONS    -->
+
+    <action android:id="@+id/go_to_splash"
+        app:destination="@id/splash_fragment"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"/>
+
+    <!--    FRAGMENTS    -->
+
+    <fragment android:name="dalian.razvan.cucer.screens.splash.SplashFragment"
+        android:label="splash_fragment"
+        android:id="@+id/splash_fragment"/>
 
 </navigation>
