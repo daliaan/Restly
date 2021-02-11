@@ -1,4 +1,4 @@
-package dalian.razvan.cucer.core
+package dalian.razvan.cucer.core.baseClasses
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

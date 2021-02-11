@@ -1,4 +1,4 @@
-package dalian.razvan.cucer.core
+package dalian.razvan.cucer.core.baseClasses
 
 import androidx.lifecycle.ViewModel
 

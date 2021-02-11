@@ -1,4 +1,4 @@
-package dalian.razvan.cucer.core
+package dalian.razvan.cucer.core.baseClasses
 
 import android.content.DialogInterface
 import android.os.Bundle
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import dalian.razvan.cucer.RestlyActivity
+import dalian.razvan.cucer.screens.RestlyActivity
 
 abstract class BaseFragment: Fragment(), BaseFragmentView {
 
