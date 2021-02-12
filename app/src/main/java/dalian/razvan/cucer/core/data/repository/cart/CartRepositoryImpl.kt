@@ -1,4 +1,6 @@
 package dalian.razvan.cucer.core.data.repository.cart
 
-class CartRepositoryImpl: CartRepository {
+import dalian.razvan.cucer.core.data.sharedPrefs.SharedPrefs
+
+class CartRepositoryImpl(sharedPrefs: SharedPrefs): CartRepository {
 }
