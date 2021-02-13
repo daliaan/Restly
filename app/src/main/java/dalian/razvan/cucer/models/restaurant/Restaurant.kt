@@ -9,10 +9,10 @@ data class Restaurant(@SerializedName("categories") val categoriesString: String
                       @SerializedName("id") val id: Int = 0,
                       @SerializedName("title") val title: String = "",
                       @SerializedName("imageUrl") val imageUrl: String = ""): Parcelable {
-    var categories = arrayListOf<String>()
+    var categoriesList = arrayListOf<String>()
 
     init {
-        categories = ArrayList(categoriesString.split(","))
+        categoriesList = ArrayList(categoriesString.split(","))
     }
 
     constructor(parcel: Parcel) : this(
