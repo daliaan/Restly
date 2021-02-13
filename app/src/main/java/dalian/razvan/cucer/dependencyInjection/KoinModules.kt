@@ -10,6 +10,7 @@ import dalian.razvan.cucer.core.data.repository.restaurants.RestaurantsRepositor
 import dalian.razvan.cucer.core.data.sharedPrefs.SharedPrefs
 import dalian.razvan.cucer.core.data.sharedPrefs.SharedPrefsImpl
 import dalian.razvan.cucer.screens.cart.CartViewModel
+import dalian.razvan.cucer.screens.productDetails.ProductDetailsViewModel
 import dalian.razvan.cucer.screens.productsList.ProductsListViewModel
 import dalian.razvan.cucer.screens.restaurantsList.RestaurantsListViewModel
 import org.koin.android.ext.koin.androidContext
@@ -31,6 +32,7 @@ val viewModelModule = module {
     viewModel{ RestaurantsListViewModel(get()) }
     viewModel{ ProductsListViewModel(get()) }
     viewModel{ CartViewModel(get()) }
+    viewModel{ ProductDetailsViewModel() }
 }
 
 val networkModule = module {
