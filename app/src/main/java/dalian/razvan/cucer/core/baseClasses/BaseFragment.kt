@@ -17,6 +17,7 @@ abstract class BaseFragment: Fragment(), BaseFragmentView {
     protected lateinit var appActivity: RestlyActivity
 
     abstract fun whichLayout(): Int
+    abstract fun toolbarTitle(): Int
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

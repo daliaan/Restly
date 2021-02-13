@@ -9,6 +9,7 @@ class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView {
     private val restaurantsViewModel by viewModel<RestaurantsListViewModel>()
 
     override fun whichLayout(): Int = R.layout.fragment_restaurants
+    override fun toolbarTitle(): Int = R.string.restaurants_title
 
     override fun onResume() {
         super.onResume()
