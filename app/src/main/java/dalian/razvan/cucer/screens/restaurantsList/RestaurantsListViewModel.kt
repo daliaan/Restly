@@ -25,7 +25,7 @@ class RestaurantsListViewModel(var repository: RestaurantsRepository): BaseViewM
                         if (it.isSuccessful) {
                             var categoryNames = ""
                             for (i in 0 until it.restaurantsResponseData.restaurantCategories.size) {
-                                categoryNames += it.restaurantsResponseData.restaurantCategories[i].name
+                                categoryNames += it.restaurantsResponseData.restaurantCategories[i].title
                             }
                             fragment.showPopup(categoryNames)
                         } else {
