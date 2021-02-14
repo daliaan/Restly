@@ -10,6 +10,8 @@ class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView {
 
     override fun whichLayout(): Int = R.layout.fragment_restaurants
     override fun toolbarTitle(): Int = R.string.restaurants_title
+    override fun toolbarHint(): Int = R.string.restaurant_or_product
+    override fun showToolbar(): Boolean = true
 
     override fun onResume() {
         super.onResume()

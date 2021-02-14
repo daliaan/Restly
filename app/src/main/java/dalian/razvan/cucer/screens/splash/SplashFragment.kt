@@ -10,6 +10,9 @@ import dalian.razvan.cucer.core.baseClasses.BaseFragment
 class SplashFragment: BaseFragment() {
 
     override fun whichLayout(): Int = R.layout.fragment_splash
+    override fun toolbarTitle(): Int = R.string.empty_string
+    override fun toolbarHint(): Int = R.string.empty_string
+    override fun showToolbar(): Boolean = false
 
     override fun onResume() {
         super.onResume()

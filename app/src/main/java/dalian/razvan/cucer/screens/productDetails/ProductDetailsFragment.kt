@@ -11,4 +11,6 @@ class ProductDetailsFragment: BaseFragment() {
 
     override fun whichLayout(): Int = R.layout.fragment_product_details
     override fun toolbarTitle(): Int = R.string.empty_string
+    override fun toolbarHint(): Int = R.string.empty_string
+    override fun showToolbar(): Boolean = false
 }

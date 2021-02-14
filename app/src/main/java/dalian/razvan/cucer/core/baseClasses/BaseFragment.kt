@@ -11,6 +11,7 @@ import androidx.navigation.Navigation
 import dalian.razvan.cucer.R
 import dalian.razvan.cucer.screens.RestlyActivity
 import kotlinx.android.synthetic.main.fragment_base_restly.*
+import kotlinx.android.synthetic.main.toolbar_layout.*
 
 abstract class BaseFragment: Fragment(), BaseFragmentView {
 
@@ -18,6 +19,8 @@ abstract class BaseFragment: Fragment(), BaseFragmentView {
 
     abstract fun whichLayout(): Int
     abstract fun toolbarTitle(): Int
+    abstract fun toolbarHint(): Int
+    abstract fun showToolbar(): Boolean
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +35,8 @@ abstract class BaseFragment: Fragment(), BaseFragmentView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragment_container.addView(LayoutInflater.from(view.context).inflate(whichLayout(), null))
         super.onViewCreated(view, savedInstanceState)
+
+        setToolbar()
     }
 
     override fun showProgressBar(show: Boolean) {
@@ -82,5 +87,14 @@ abstract class BaseFragment: Fragment(), BaseFragmentView {
 
     override fun isActivityVisible(): Boolean {
         TODO("Not yet implemented")
+    }
+
+    private fun setToolbar() {
+        if (showToolbar()) {
+            toolbar_title.text = getString(toolbarTitle())
+            toolbar_search_view.setHint(getString(toolbarHint()))
+        } else {
+            toolbar_layout.visibility = View.GONE
+        }
     }
 }
