@@ -34,7 +34,7 @@
         android:id="@+id/restaurant_rating"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/restaurant_image"
         app:layout_constraintEnd_toStartOf="@id/restaurant_rating"
@@ -47,12 +47,12 @@
         android:id="@+id/restaurant_title"/>
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="@id/restaurant_image"
         app:layout_constraintEnd_toEndOf="@id/restaurant_image"
         app:layout_constraintTop_toBottomOf="@id/restaurant_title"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:textSize="13sp"
         android:textColor="@color/light_grey"
         android:id="@+id/restaurant_categories"/>
