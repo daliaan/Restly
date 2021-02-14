@@ -30,7 +30,7 @@ val repositoryModule = module {
 
 val viewModelModule = module {
     viewModel{ RestaurantsListViewModel(get()) }
-    viewModel{ ProductsListViewModel(get()) }
+    viewModel{ ProductsListViewModel(get(), get()) }
     viewModel{ CartViewModel(get()) }
     viewModel{ ProductDetailsViewModel() }
 }
