@@ -11,4 +11,5 @@
     <string name="account">Account</string>
     <string name="loading_restaurants_failed">Loading restaurant list from server failed.</string>
     <string name="loading_products_failed">Loading products list from server failed.</string>
+    <string name="raised_hand">You have raised your hand. Please wait, a waiter will be with you soon.</string>
 </resources>

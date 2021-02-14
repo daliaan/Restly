@@ -1,5 +1,12 @@
 package dalian.razvan.cucer.screens.productsList
 
+import android.app.NotificationChannel
+import android.app.NotificationChannel.DEFAULT_CHANNEL_ID
+import android.app.NotificationManager
+import android.content.Context
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.lifecycle.viewModelScope
 import dalian.razvan.cucer.R
 import dalian.razvan.cucer.core.baseClasses.BaseViewModel
@@ -15,6 +22,10 @@ import java.util.ArrayList
 
 class ProductsListViewModel(private val repository: ProductsRepository, private val restaurantsRepository: RestaurantsRepository): BaseViewModel() {
 
+    private val GROUP_KEY = "dalian.razvan.cucer.restly"
+    private val NOTIFICATION_CHANNEL_DESCRIPTION = "restly_channel"
+    private val NOTIFICATION_CHANNEL_NAME = "restly_channel"
+    private val NOTIFICATION_CHANNEL_ID = "restly_channel"
     private var reset = true
     private val selectedCategories = arrayListOf<Category>()
 
@@ -130,7 +141,35 @@ class ProductsListViewModel(private val repository: ProductsRepository, private 
     fun getPreviouslyLoadedCategories(): ArrayList<Category> = repository.getCategoryList()
     fun getPreviouslyLoadedProducts(): ArrayList<Product> = repository.getProductList()
 
-    fun raisedHand() {
+    fun raisedHand(context: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel = NotificationChannel(
+                    NOTIFICATION_CHANNEL_ID,
+                    NOTIFICATION_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationChannel.description = NOTIFICATION_CHANNEL_DESCRIPTION
+            notificationChannel.enableLights(true)
+            notificationChannel.enableVibration(true)
 
+            with(NotificationManagerCompat.from(context)) {
+                createNotificationChannel(notificationChannel)
+            }
+        }
+
+        val builder = NotificationCompat.Builder(context)
+                .setSmallIcon(R.drawable.raise_hand)
+                .setContentTitle(context.resources.getString(R.string.raised_hand))
+                .setContentText(context.resources.getString(R.string.raised_hand))
+                .setStyle(NotificationCompat.BigTextStyle())
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true)
+                .setGroup(GROUP_KEY)
+
+        with(NotificationManagerCompat.from(context)) {
+            notify(generateUniqueNotificationId(), builder.build())
+        }
     }
+
+    private fun generateUniqueNotificationId(): Int = (Int.MIN_VALUE..Int.MAX_VALUE).random()
 }

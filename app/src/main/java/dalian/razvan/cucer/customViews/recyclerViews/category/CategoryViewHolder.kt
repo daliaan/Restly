@@ -13,15 +13,20 @@ class CategoryViewHolder(itemView: View): BaseRecyclerViewHolder<Category>(itemV
     override fun bind(item: Category, onItemClick: RecyclerViewItemClickListener<Category>) {
         itemView.setOnClickListener {
             itemView.category_cell_background.isSelected = !itemView.category_cell_background.isSelected
-            if (itemView.category_cell_background.isSelected) {
-                itemView.category_cell_title.setTextColor(itemView.resources.getColor(R.color.white))
-            } else {
-                itemView.category_cell_title.setTextColor(itemView.resources.getColor(R.color.dark_grey))
-            }
+            checkTitleColor(itemView.category_cell_background.isSelected)
             onItemClick.onItemClick(item)
         }
         itemView.category_cell_image.load(item.imageUrl)
         itemView.category_cell_title.text = item.title
         itemView.category_cell_background.isSelected = item.isSelected
+        checkTitleColor(item.isSelected)
+    }
+
+    private fun checkTitleColor(selected: Boolean) {
+        if (selected) {
+            itemView.category_cell_title.setTextColor(itemView.resources.getColor(R.color.white))
+        } else {
+            itemView.category_cell_title.setTextColor(itemView.resources.getColor(R.color.dark_grey))
+        }
     }
 }

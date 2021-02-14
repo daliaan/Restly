@@ -24,7 +24,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:id="@+id/raise_hand"
         android:src="@drawable/raise_hand"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"/>
 

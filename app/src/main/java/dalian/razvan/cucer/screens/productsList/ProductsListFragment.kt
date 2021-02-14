@@ -63,7 +63,7 @@ class ProductsListFragment: BaseFragment(), ProductsListFragmentView, TextWatche
         product_list.addOnScrollListener(onScrollListener)
 
         raise_hand.setOnClickListener {
-            productsListViewModel.raisedHand()
+            productsListViewModel.raisedHand(it.context)
         }
     }
 
