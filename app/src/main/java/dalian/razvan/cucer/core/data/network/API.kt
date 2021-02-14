@@ -1,8 +1,10 @@
 package dalian.razvan.cucer.core.data.network
 
+import dalian.razvan.cucer.core.data.network.model.request.ProductsRequest
 import dalian.razvan.cucer.core.data.network.model.request.RestaurantsRequest
 import dalian.razvan.cucer.core.data.network.model.response.products.InitProductsResponse
 import dalian.razvan.cucer.core.data.network.model.response.products.ProductDetailsResponse
+import dalian.razvan.cucer.core.data.network.model.response.products.ProductsResponse
 import dalian.razvan.cucer.core.data.network.model.response.restaurants.InitRestaurantsResponse
 import dalian.razvan.cucer.core.data.network.model.response.restaurants.RestaurantsResponse
 import dalian.razvan.cucer.core.data.repository.Endpoints
@@ -20,5 +22,6 @@ interface API {
     suspend fun initiateRestaurantMenu(@Query("restaurantId") restaurantId: Int): Response<InitProductsResponse>
     @GET(Endpoints.GET_PRODUCT_BY_ID)
     suspend fun getProductById(@Query("productId") productId: Int): Response<ProductDetailsResponse>
-
+    @POST(Endpoints.GET_MENU_LIST)
+    suspend fun getProducts(@Body getProducts: ProductsRequest): Response<ProductsResponse>
 }
