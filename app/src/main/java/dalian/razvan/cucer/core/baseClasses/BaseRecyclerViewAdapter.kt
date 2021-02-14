@@ -16,6 +16,7 @@ abstract class BaseRecyclerViewAdapter<T: BaseModel,VH : BaseRecyclerViewHolder<
 
     fun setList(items: ArrayList<T>) {
         this.items.addAll(items)
+        notifyDataSetChanged()
     }
 
     fun resetList(items: ArrayList<T>) {

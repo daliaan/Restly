@@ -10,7 +10,7 @@ data class RestaurantsResponseData(@SerializedName("totalPages") val totalPages:
                                    @SerializedName("currentPage") val currentPage: Int,
                                    @SerializedName("activeIndex") val activeIndex: Int,
                                    @SerializedName("totalElementCount") val totalElementCount: Int,
-                                   val restaurants: ArrayList<Restaurant> = arrayListOf()): Parcelable {
+                                   @SerializedName("data") val restaurants: ArrayList<Restaurant> = arrayListOf()): Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readInt(),
         parcel.readInt(),

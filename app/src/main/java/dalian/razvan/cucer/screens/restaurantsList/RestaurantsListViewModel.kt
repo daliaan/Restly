@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dalian.razvan.cucer.R
 import dalian.razvan.cucer.core.baseClasses.BaseViewModel
+import dalian.razvan.cucer.core.baseClasses.RecyclerViewItemClickListener
 import dalian.razvan.cucer.core.data.network.Result
 import dalian.razvan.cucer.core.data.repository.restaurants.RestaurantsRepository
+import dalian.razvan.cucer.models.restaurant.Category
 import dalian.razvan.cucer.models.restaurant.Restaurant
 import kotlinx.coroutines.launch
 
@@ -23,11 +25,8 @@ class RestaurantsListViewModel(var repository: RestaurantsRepository): BaseViewM
                     Log.e("json", "json body yo'\n " + response.toString())
                     initRestaurantResponse?.let {
                         if (it.isSuccessful) {
-                            var categoryNames = ""
-                            for (i in 0 until it.restaurantsResponseData.restaurantCategories.size) {
-                                categoryNames += it.restaurantsResponseData.restaurantCategories[i].title
-                            }
-                            fragment.showPopup(categoryNames)
+                            fragment.setCategoryList(it.restaurantsResponseData.restaurantCategories)
+                            fragment.setRestaurantList(it.restaurantsResponseData.restaurantsResponseData.restaurants)
                         } else {
                             fragment.showPopup(it.message + "")
                         }
@@ -37,6 +36,18 @@ class RestaurantsListViewModel(var repository: RestaurantsRepository): BaseViewM
 
                 }
             }
+        }
+    }
+
+    fun onCategoryItemClick(): RecyclerViewItemClickListener<Category> = object: RecyclerViewItemClickListener<Category> {
+        override fun onItemClick(item: Category) {
+            TODO("Not yet implemented")
+        }
+    }
+
+    fun onRestaurantItemClick(): RecyclerViewItemClickListener<Restaurant> = object: RecyclerViewItemClickListener<Restaurant> {
+        override fun onItemClick(item: Restaurant) {
+            TODO("Not yet implemented")
         }
     }
 }
