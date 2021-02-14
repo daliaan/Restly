@@ -15,6 +15,8 @@ data class Category(@SerializedName("id") val id: Int = 0,
     ) {
     }
 
+    var isSelected = false
+
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeInt(id)
         parcel.writeString(title)

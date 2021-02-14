@@ -2,6 +2,7 @@ package dalian.razvan.cucer.screens.splash
 
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextWatcher
 import android.view.View
 import androidx.navigation.Navigation
 import coil.Coil
@@ -17,6 +18,7 @@ class SplashFragment: BaseFragment() {
     override fun toolbarHint(): Int = R.string.empty_string
     override fun showToolbar(): Boolean = false
     override fun showBottombar(): Boolean = false
+    override fun getTextWatcher(): TextWatcher? = null
 
     override fun onResume() {
         super.onResume()

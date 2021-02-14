@@ -1,5 +1,6 @@
 package dalian.razvan.cucer.screens.productDetails
 
+import android.text.TextWatcher
 import dalian.razvan.cucer.R
 import dalian.razvan.cucer.core.baseClasses.BaseFragment
 import dalian.razvan.cucer.screens.restaurantsList.RestaurantsListViewModel
@@ -14,4 +15,5 @@ class ProductDetailsFragment: BaseFragment() {
     override fun toolbarHint(): Int = R.string.empty_string
     override fun showToolbar(): Boolean = false
     override fun showBottombar(): Boolean = true
+    override fun getTextWatcher(): TextWatcher? = null
 }

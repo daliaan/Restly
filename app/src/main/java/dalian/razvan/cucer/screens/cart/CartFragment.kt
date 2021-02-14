@@ -1,5 +1,6 @@
 package dalian.razvan.cucer.screens.cart
 
+import android.text.TextWatcher
 import dalian.razvan.cucer.R
 import dalian.razvan.cucer.core.baseClasses.BaseFragment
 
@@ -9,4 +10,5 @@ class CartFragment: BaseFragment() {
     override fun toolbarHint(): Int = R.string.empty_string
     override fun showToolbar(): Boolean = true
     override fun showBottombar(): Boolean = true
+    override fun getTextWatcher(): TextWatcher? = null
 }

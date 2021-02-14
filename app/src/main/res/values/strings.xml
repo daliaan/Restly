@@ -9,4 +9,5 @@
     <string name="order">Order</string>
     <string name="tab">Tab</string>
     <string name="account">Account</string>
+    <string name="loading_restaurants_failed">Loading restaurant list from server failed.</string>
 </resources>

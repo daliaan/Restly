@@ -11,6 +11,7 @@ data class Restaurant(@SerializedName("categories") val categoriesString: String
                       @SerializedName("title") val title: String = "",
                       @SerializedName("imageUrl") val imageUrl: String = ""): BaseModel(), Parcelable {
     var categoriesList = arrayListOf<String>()
+    var isSelected = false
 
     init {
         categoriesList = ArrayList(categoriesString.split(","))

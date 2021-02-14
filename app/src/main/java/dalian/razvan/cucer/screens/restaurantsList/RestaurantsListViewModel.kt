@@ -10,44 +10,102 @@ import dalian.razvan.cucer.core.data.repository.restaurants.RestaurantsRepositor
 import dalian.razvan.cucer.models.restaurant.Category
 import dalian.razvan.cucer.models.restaurant.Restaurant
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
-class RestaurantsListViewModel(var repository: RestaurantsRepository): BaseViewModel() {
+class RestaurantsListViewModel(private var repository: RestaurantsRepository): BaseViewModel() {
 
-    val restaurants = arrayListOf<Restaurant>()
+    private val selectedCategories = arrayListOf<Category>()
+    private val selectedRestaurants = arrayListOf<Restaurant>()
 
     fun loadRestaurants(fragment: RestaurantsListFragmentView) {
         viewModelScope.launch {
 
-            when(val response = repository.initRestaurants()) {
-                is Result.Success -> {
+            if (repository.getRestaurantList().size > 0) {
+                getRestaurants(fragment)
+            } else {
+                when (val response = repository.initRestaurants()) {
+                    is Result.Success -> {
+                        val initRestaurantResponse = response.value
+                        initRestaurantResponse?.let {
+                            if (it.isSuccessful) {
+                                repository.setCategoryList(it.restaurantsResponseData.restaurantCategories)
+                                repository.resetRestaurantList(it.restaurantsResponseData.restaurantsResponseData.restaurants)
 
-                    val initRestaurantResponse = response.value
-                    Log.e("json", "json body yo'\n " + response.toString())
-                    initRestaurantResponse?.let {
+                                repository.setCurrentPage(it.restaurantsResponseData.restaurantsResponseData.currentPage)
+                                repository.setTotalPages(it.restaurantsResponseData.restaurantsResponseData.totalPages)
+
+                                fragment.setCategoryList(repository.getCategoryList())
+                                fragment.resetRestaurantList(repository.getRestaurantList())
+                            } else {
+                                fragment.showPopup(it.message + "")
+                            }
+                        }
+                    }
+                    else -> {
+                        fragment.showPopup(R.string.loading_restaurants_failed)
+                    }
+                }
+            }
+        }
+    }
+
+    public fun getRestaurants(fragment: RestaurantsListFragmentView) {
+        viewModelScope.launch {
+            when (val response = repository.getRestaurants(fragment.getQuery(), getSelectedCategoriesIds())) {
+                is Result.Success -> {
+                    val getRestaurantResponse = response.value
+                    getRestaurantResponse?.let {
                         if (it.isSuccessful) {
-                            fragment.setCategoryList(it.restaurantsResponseData.restaurantCategories)
-                            fragment.setRestaurantList(it.restaurantsResponseData.restaurantsResponseData.restaurants)
+                            if (it.restaurantsResponseData.restaurants.size > 0) {
+                                repository.setRestaurantList(it.restaurantsResponseData.restaurants)
+                                repository.setCurrentPage(it.restaurantsResponseData.currentPage)
+                                repository.setTotalPages(it.restaurantsResponseData.totalPages)
+
+                                fragment.setRestaurantList(it.restaurantsResponseData.restaurants)
+                            }
                         } else {
                             fragment.showPopup(it.message + "")
                         }
                     }
                 }
                 else -> {
-
+                    fragment.showPopup(R.string.loading_restaurants_failed)
                 }
             }
         }
     }
 
+    private fun getSelectedCategoriesIds(): ArrayList<Int> {
+        val ids = arrayListOf<Int>()
+
+        for (i in 0 until selectedCategories.size) {
+            ids.add(selectedCategories[i].id)
+        }
+
+        return ids
+    }
+
     fun onCategoryItemClick(): RecyclerViewItemClickListener<Category> = object: RecyclerViewItemClickListener<Category> {
         override fun onItemClick(item: Category) {
-            TODO("Not yet implemented")
+            if (item.isSelected) {
+                item.isSelected = false
+                selectedCategories.remove(item)
+            } else {
+                item.isSelected = true
+                selectedCategories.add(item)
+            }
         }
     }
 
     fun onRestaurantItemClick(): RecyclerViewItemClickListener<Restaurant> = object: RecyclerViewItemClickListener<Restaurant> {
         override fun onItemClick(item: Restaurant) {
-            TODO("Not yet implemented")
+            if (item.isSelected) {
+                item.isSelected = false
+                selectedRestaurants.remove(item)
+            } else {
+                item.isSelected = true
+                selectedRestaurants.add(item)
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-package dalian.razvan.cucer.customViews.recyclerViews
+package dalian.razvan.cucer.customViews.recyclerViews.restaurant
 
 import android.view.View
 import coil.load

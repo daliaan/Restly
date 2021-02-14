@@ -2,6 +2,7 @@ package dalian.razvan.cucer.core.baseClasses
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -17,6 +18,7 @@ import dalian.razvan.cucer.screens.productDetails.ProductDetailsFragment
 import dalian.razvan.cucer.screens.productsList.ProductsListFragment
 import dalian.razvan.cucer.screens.restaurantsList.RestaurantsListFragment
 import kotlinx.android.synthetic.main.fragment_base_restly.*
+import kotlinx.android.synthetic.main.restly_search_view.view.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
 
 abstract class BaseFragment: Fragment(), BaseFragmentView, BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
@@ -28,6 +30,8 @@ abstract class BaseFragment: Fragment(), BaseFragmentView, BottomNavigationView.
     abstract fun toolbarHint(): Int
     abstract fun showToolbar(): Boolean
     abstract fun showBottombar(): Boolean
+
+    abstract fun getTextWatcher(): TextWatcher?
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -137,6 +141,9 @@ abstract class BaseFragment: Fragment(), BaseFragmentView, BottomNavigationView.
         if (showToolbar()) {
             toolbar_title.text = getString(toolbarTitle())
             toolbar_search_view.setHint(getString(toolbarHint()))
+            getTextWatcher()?.let {
+                toolbar_search_view.search_edit_text.addTextChangedListener(it)
+            }
         } else {
             toolbar_layout.visibility = View.GONE
         }
