@@ -3,17 +3,21 @@ package dalian.razvan.cucer.core.baseClasses
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dalian.razvan.cucer.R
 import dalian.razvan.cucer.screens.RestlyActivity
+import dalian.razvan.cucer.screens.cart.CartFragment
+import dalian.razvan.cucer.screens.restaurantsList.RestaurantsListFragment
 import kotlinx.android.synthetic.main.fragment_base_restly.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
 
-abstract class BaseFragment: Fragment(), BaseFragmentView {
+abstract class BaseFragment: Fragment(), BaseFragmentView, BottomNavigationView.OnNavigationItemSelectedListener, BottomNavigationView.OnNavigationItemReselectedListener {
 
     protected lateinit var appActivity: RestlyActivity
 
@@ -86,6 +90,38 @@ abstract class BaseFragment: Fragment(), BaseFragmentView {
     }
 
     override fun isActivityVisible(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.item_menu -> {
+                if (this !is RestaurantsListFragment) {
+                    view?.let {
+                        Navigation.findNavController(it).popBackStack()
+                        Navigation.findNavController(it).navigate(R.id.go_to_restaurants)
+                    }
+                }
+            }
+            R.id.item_order -> {
+                if (this !is CartFragment) {
+                    view?.let {
+                        Navigation.findNavController(it).popBackStack()
+                        Navigation.findNavController(it).navigate(R.id.go_to_cart)
+                    }
+                }
+            }
+            R.id.item_tab -> {
+
+            }
+            R.id.item_account -> {
+
+            }
+        }
+        return true
+    }
+
+    override fun onNavigationItemReselected(item: MenuItem) {
         TODO("Not yet implemented")
     }
 

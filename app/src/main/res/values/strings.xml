@@ -6,4 +6,7 @@
     <string name="empty_string" />
     <string name="restaurant_or_product">Restaurant or product</string>
     <string name="clear">Clear</string>
+    <string name="order">Order</string>
+    <string name="tab">Tab</string>
+    <string name="account">Account</string>
 </resources>
