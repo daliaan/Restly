@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dalian.razvan.cucer.R
@@ -20,6 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView, TextWatcher {
 
     private val restaurantsViewModel by viewModel<RestaurantsListViewModel>()
+    private var mustReset = false
 
     private lateinit var categoriesAdapter: CategoryAdapter
     private lateinit var restaurantsAdapter: RestaurantAdapter
@@ -28,7 +30,7 @@ class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView, Text
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                restaurantsViewModel.loadRestaurants(this@RestaurantsListFragment)
+                restaurantsViewModel.loadNextRestaurants(this@RestaurantsListFragment)
             }
         }
     }
@@ -46,7 +48,7 @@ class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView, Text
         category_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         category_list.setHasFixedSize(true)
         categoriesAdapter = CategoryAdapter()
-        categoriesAdapter.addItemClickListener(restaurantsViewModel.onCategoryItemClick())
+        categoriesAdapter.addItemClickListener(restaurantsViewModel.onCategoryItemClick(this))
         category_list.adapter = categoriesAdapter
 
         restaurant_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -76,10 +78,23 @@ class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView, Text
     }
 
     override fun getQuery(): String = toolbar_search_view.search_edit_text.text.toString()
+    override fun reset(): Boolean = mustReset
+
+    override fun resetConsumed() {
+        mustReset = false
+    }
+
+    override fun goToRestaurantDetails() {
+        view?.let{
+            Navigation.findNavController(it).navigate(R.id.go_to_products)
+        }
+    }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        mustReset = true
+    }
 
     override fun afterTextChanged(s: Editable?) {
         s?.let {

@@ -14,8 +14,8 @@ import java.util.ArrayList
 
 class RestaurantsListViewModel(private var repository: RestaurantsRepository): BaseViewModel() {
 
+    private var reset = true
     private val selectedCategories = arrayListOf<Category>()
-    private val selectedRestaurants = arrayListOf<Restaurant>()
 
     fun loadRestaurants(fragment: RestaurantsListFragmentView) {
         viewModelScope.launch {
@@ -23,33 +23,39 @@ class RestaurantsListViewModel(private var repository: RestaurantsRepository): B
             if (repository.getRestaurantList().size > 0) {
                 getRestaurants(fragment)
             } else {
-                when (val response = repository.initRestaurants()) {
-                    is Result.Success -> {
-                        val initRestaurantResponse = response.value
-                        initRestaurantResponse?.let {
-                            if (it.isSuccessful) {
-                                repository.setCategoryList(it.restaurantsResponseData.restaurantCategories)
-                                repository.resetRestaurantList(it.restaurantsResponseData.restaurantsResponseData.restaurants)
+                initRestaurants(fragment)
+            }
+        }
+    }
 
-                                repository.setCurrentPage(it.restaurantsResponseData.restaurantsResponseData.currentPage)
-                                repository.setTotalPages(it.restaurantsResponseData.restaurantsResponseData.totalPages)
+    private fun initRestaurants(fragment: RestaurantsListFragmentView) {
+        viewModelScope.launch {
+            when (val response = repository.initRestaurants()) {
+                is Result.Success -> {
+                    val initRestaurantResponse = response.value
+                    initRestaurantResponse?.let {
+                        if (it.isSuccessful) {
+                            repository.setCategoryList(it.restaurantsResponseData.restaurantCategories)
+                            repository.resetRestaurantList(it.restaurantsResponseData.restaurantsResponseData.restaurants)
 
-                                fragment.setCategoryList(repository.getCategoryList())
-                                fragment.resetRestaurantList(repository.getRestaurantList())
-                            } else {
-                                fragment.showPopup(it.message + "")
-                            }
+                            repository.setCurrentPage(it.restaurantsResponseData.restaurantsResponseData.currentPage)
+                            repository.setTotalPages(it.restaurantsResponseData.restaurantsResponseData.totalPages)
+
+                            fragment.setCategoryList(repository.getCategoryList())
+                            fragment.resetRestaurantList(repository.getRestaurantList())
+                        } else {
+                            fragment.showPopup(it.message + "")
                         }
                     }
-                    else -> {
-                        fragment.showPopup(R.string.loading_restaurants_failed)
-                    }
+                }
+                else -> {
+                    fragment.showPopup(R.string.loading_restaurants_failed)
                 }
             }
         }
     }
 
-    public fun getRestaurants(fragment: RestaurantsListFragmentView) {
+    fun getRestaurants(fragment: RestaurantsListFragmentView) {
         viewModelScope.launch {
             when (val response = repository.getRestaurants(fragment.getQuery(), getSelectedCategoriesIds())) {
                 is Result.Success -> {
@@ -57,11 +63,18 @@ class RestaurantsListViewModel(private var repository: RestaurantsRepository): B
                     getRestaurantResponse?.let {
                         if (it.isSuccessful) {
                             if (it.restaurantsResponseData.restaurants.size > 0) {
-                                repository.setRestaurantList(it.restaurantsResponseData.restaurants)
+                                if (reset || fragment.reset()) {
+                                    reset = false
+                                    fragment.resetConsumed()
+                                    repository.resetRestaurantList(it.restaurantsResponseData.restaurants)
+                                    fragment.resetRestaurantList(it.restaurantsResponseData.restaurants)
+                                } else {
+                                    repository.setRestaurantList(it.restaurantsResponseData.restaurants)
+                                    fragment.setRestaurantList(it.restaurantsResponseData.restaurants)
+                                }
+
                                 repository.setCurrentPage(it.restaurantsResponseData.currentPage)
                                 repository.setTotalPages(it.restaurantsResponseData.totalPages)
-
-                                fragment.setRestaurantList(it.restaurantsResponseData.restaurants)
                             }
                         } else {
                             fragment.showPopup(it.message + "")
@@ -85,8 +98,9 @@ class RestaurantsListViewModel(private var repository: RestaurantsRepository): B
         return ids
     }
 
-    fun onCategoryItemClick(): RecyclerViewItemClickListener<Category> = object: RecyclerViewItemClickListener<Category> {
+    fun onCategoryItemClick(fragment: RestaurantsListFragmentView): RecyclerViewItemClickListener<Category> = object: RecyclerViewItemClickListener<Category> {
         override fun onItemClick(item: Category) {
+            reset = true
             if (item.isSelected) {
                 item.isSelected = false
                 selectedCategories.remove(item)
@@ -94,18 +108,19 @@ class RestaurantsListViewModel(private var repository: RestaurantsRepository): B
                 item.isSelected = true
                 selectedCategories.add(item)
             }
+            getRestaurants(fragment)
         }
     }
 
-    fun onRestaurantItemClick(): RecyclerViewItemClickListener<Restaurant> = object: RecyclerViewItemClickListener<Restaurant> {
+    fun onRestaurantItemClick(fragment: RestaurantsListFragmentView): RecyclerViewItemClickListener<Restaurant> = object: RecyclerViewItemClickListener<Restaurant> {
         override fun onItemClick(item: Restaurant) {
-            if (item.isSelected) {
-                item.isSelected = false
-                selectedRestaurants.remove(item)
-            } else {
-                item.isSelected = true
-                selectedRestaurants.add(item)
-            }
+            repository.setSelectedRestaurant(item)
+            fragment.goToRestaurantDetails()
         }
+    }
+
+    fun loadNextRestaurants(fragment: RestaurantsListFragmentView) {
+        if (repository.getCurrentPage() + 1 < repository.getTotalPages())
+            getRestaurants(fragment)
     }
 }

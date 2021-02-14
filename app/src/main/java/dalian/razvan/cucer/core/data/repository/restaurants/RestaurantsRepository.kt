@@ -22,4 +22,7 @@ interface RestaurantsRepository {
 
     fun setCurrentPage(page: Int)
     fun setTotalPages(pages: Int)
+    fun setSelectedRestaurant(restaurant: Restaurant?)
+    fun getCurrentPage(): Int
+    fun getTotalPages(): Int
 }

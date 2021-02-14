@@ -16,14 +16,20 @@ class RestaurantsRepositoryImpl(var api: API, var sharedPrefs: SharedPrefs): Res
     private val categories = arrayListOf<Category>()
 
     private var currentPage = 0
+    override fun getCurrentPage(): Int = currentPage
+
     private var totalPages = 0
+    override fun getTotalPages(): Int = totalPages
+
     private val pageSize = 10
+
+    private var selectedRestaurant: Restaurant? = null
 
     override suspend fun initRestaurants(): Result<InitRestaurantsResponse?> = safeApiCall { api.initiateRestaurants() }
     override suspend fun getRestaurants(query: String, list: ArrayList<Int>): Result<RestaurantsResponse?> = safeApiCall { api.getRestaurants(getRestaurantsParams(query, list)) }
 
     private fun getRestaurantsParams(query: String, list: ArrayList<Int>): RestaurantsRequest
-            = RestaurantsRequest(pageNumber = currentPage + 1, pageSize = pageSize, categoryIds = list, queryTerm = query)
+            = RestaurantsRequest(generatePageNumber(query, list), pageSize = pageSize, categoryIds = list, queryTerm = query)
 
     override fun setRestaurantList(list: ArrayList<Restaurant>) {
         restaurants.addAll(list)
@@ -47,5 +53,15 @@ class RestaurantsRepositoryImpl(var api: API, var sharedPrefs: SharedPrefs): Res
 
     override fun setTotalPages(pages: Int) {
         this.totalPages = pages
+    }
+
+    override fun setSelectedRestaurant(restaurant: Restaurant?) {
+        selectedRestaurant = restaurant
+    }
+
+    private fun generatePageNumber(query: String, list: java.util.ArrayList<Int>): Int {
+        if (!(query.isBlank() || query.isEmpty()) || list.size > 0)
+            return 0
+        return currentPage + 1
     }
 }

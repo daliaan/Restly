@@ -11,4 +11,7 @@ interface RestaurantsListFragmentView: BaseFragmentView {
     fun resetRestaurantList(restaurantList: ArrayList<Restaurant>)
 
     fun getQuery(): String
+    fun reset(): Boolean
+    fun resetConsumed()
+    fun goToRestaurantDetails()
 }

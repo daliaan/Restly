@@ -2,6 +2,7 @@ package dalian.razvan.cucer.customViews.recyclerViews.category
 
 import android.view.View
 import coil.load
+import dalian.razvan.cucer.R
 import dalian.razvan.cucer.core.baseClasses.BaseRecyclerViewHolder
 import dalian.razvan.cucer.core.baseClasses.RecyclerViewItemClickListener
 import dalian.razvan.cucer.models.restaurant.Category
@@ -11,10 +12,16 @@ class CategoryViewHolder(itemView: View): BaseRecyclerViewHolder<Category>(itemV
 
     override fun bind(item: Category, onItemClick: RecyclerViewItemClickListener<Category>) {
         itemView.setOnClickListener {
+            itemView.category_cell_background.isSelected = !itemView.category_cell_background.isSelected
+            if (itemView.category_cell_background.isSelected) {
+                itemView.category_cell_title.setTextColor(itemView.resources.getColor(R.color.white))
+            } else {
+                itemView.category_cell_title.setTextColor(itemView.resources.getColor(R.color.dark_grey))
+            }
             onItemClick.onItemClick(item)
         }
         itemView.category_cell_image.load(item.imageUrl)
         itemView.category_cell_title.text = item.title
+        itemView.category_cell_background.isSelected = item.isSelected
     }
-
 }
