@@ -13,6 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import dalian.razvan.cucer.R
 import dalian.razvan.cucer.screens.RestlyActivity
 import dalian.razvan.cucer.screens.cart.CartFragment
+import dalian.razvan.cucer.screens.productDetails.ProductDetailsFragment
+import dalian.razvan.cucer.screens.productsList.ProductsListFragment
 import dalian.razvan.cucer.screens.restaurantsList.RestaurantsListFragment
 import kotlinx.android.synthetic.main.fragment_base_restly.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
@@ -25,6 +27,7 @@ abstract class BaseFragment: Fragment(), BaseFragmentView, BottomNavigationView.
     abstract fun toolbarTitle(): Int
     abstract fun toolbarHint(): Int
     abstract fun showToolbar(): Boolean
+    abstract fun showBottombar(): Boolean
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +42,13 @@ abstract class BaseFragment: Fragment(), BaseFragmentView, BottomNavigationView.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         fragment_container.addView(LayoutInflater.from(view.context).inflate(whichLayout(), null))
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onResume() {
+        super.onResume()
 
         setToolbar()
+        setBottombar()
     }
 
     override fun showProgressBar(show: Boolean) {
@@ -122,7 +130,7 @@ abstract class BaseFragment: Fragment(), BaseFragmentView, BottomNavigationView.
     }
 
     override fun onNavigationItemReselected(item: MenuItem) {
-        TODO("Not yet implemented")
+
     }
 
     private fun setToolbar() {
@@ -131,6 +139,21 @@ abstract class BaseFragment: Fragment(), BaseFragmentView, BottomNavigationView.
             toolbar_search_view.setHint(getString(toolbarHint()))
         } else {
             toolbar_layout.visibility = View.GONE
+        }
+    }
+
+    private fun setBottombar() {
+        if (showBottombar()) {
+            bottom_bar.setOnNavigationItemReselectedListener(this)
+            bottom_bar.setOnNavigationItemSelectedListener(this)
+
+            if (this is RestaurantsListFragment || this is ProductsListFragment || this is ProductDetailsFragment) {
+                bottom_bar.selectedItemId = R.id.item_menu
+            } else if (this is CartFragment) {
+                bottom_bar.selectedItemId = R.id.item_order
+            }
+        } else {
+            bottom_bar.visibility = View.GONE
         }
     }
 }

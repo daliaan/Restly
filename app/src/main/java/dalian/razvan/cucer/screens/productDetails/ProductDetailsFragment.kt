@@ -13,4 +13,5 @@ class ProductDetailsFragment: BaseFragment() {
     override fun toolbarTitle(): Int = R.string.empty_string
     override fun toolbarHint(): Int = R.string.empty_string
     override fun showToolbar(): Boolean = false
+    override fun showBottombar(): Boolean = true
 }

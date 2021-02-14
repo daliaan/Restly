@@ -10,10 +10,14 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <include layout="@layout/bottombar_layout"
-        android:id="@+id/bottombar_layout"
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="76dp"
+        app:menu="@menu/bottom_bar_menu"
+        app:itemTextColor="@color/bottom_navigation_view_color"
+        app:itemIconTint="@color/bottom_navigation_view_color"
+        app:labelVisibilityMode="labeled"
+        android:id="@+id/bottom_bar"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <FrameLayout
@@ -21,6 +25,6 @@
         android:layout_height="0dp"
         android:id="@+id/fragment_container"
         app:layout_constraintTop_toBottomOf="@id/toolbar_layout"
-        app:layout_constraintBottom_toTopOf="@id/bottombar_layout"/>
+        app:layout_constraintBottom_toTopOf="@id/bottom_bar"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
