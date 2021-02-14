@@ -3,6 +3,7 @@ package dalian.razvan.cucer.models.product
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import dalian.razvan.cucer.core.baseClasses.BaseModel
 import dalian.razvan.cucer.models.restaurant.Restaurant
 
 data class OptionsGroup(@SerializedName("id") val id: Int = 0,
@@ -11,7 +12,7 @@ data class OptionsGroup(@SerializedName("id") val id: Int = 0,
                         @SerializedName("min") val min: Int = 0,
                         @SerializedName("max") val max: Int = 0,
                         @SerializedName("isRequired") val isRequired: Boolean = false,
-                        @SerializedName("options") val options: ArrayList<Option> = arrayListOf()): Parcelable {
+                        @SerializedName("options") val options: ArrayList<Option> = arrayListOf()): BaseModel(), Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readString().toString(),

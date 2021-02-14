@@ -3,10 +3,11 @@ package dalian.razvan.cucer.models.product
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import dalian.razvan.cucer.core.baseClasses.BaseModel
 
 data class Option(@SerializedName("id") val id: Int = 0,
                   @SerializedName("name") val name: String = "",
-                  @SerializedName("price") val price: Double = 0.0): Parcelable {
+                  @SerializedName("price") val price: Double = 0.0): BaseModel(), Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readString().toString(),

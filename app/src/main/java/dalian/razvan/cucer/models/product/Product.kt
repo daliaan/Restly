@@ -12,7 +12,8 @@ data class Product(@SerializedName("id") val id: Int = 0,
                    @SerializedName("description") val description: String = "",
                    @SerializedName("rating") val rating: Double = 0.0,
                    @SerializedName("price") val price: Double = 0.0,
-                   @SerializedName("allergens") val allergens: ArrayList<String> = arrayListOf()): BaseModel(), Parcelable {
+                   @SerializedName("allergens") val allergens: ArrayList<String> = arrayListOf(),
+                   @SerializedName("options") val options: ArrayList<OptionsGroup>): BaseModel(), Parcelable {
     constructor(parcel: Parcel) : this(
             parcel.readInt(),
             parcel.readString().toString(),
@@ -22,6 +23,9 @@ data class Product(@SerializedName("id") val id: Int = 0,
             parcel.readDouble(),
             arrayListOf<String>().apply {
                 parcel.readArrayList(String::class.java.classLoader)
+            },
+            arrayListOf<OptionsGroup>().apply {
+                parcel.readArrayList(OptionsGroup::class.java.classLoader)
             }) {
     }
 
@@ -33,6 +37,7 @@ data class Product(@SerializedName("id") val id: Int = 0,
         parcel.writeDouble(rating)
         parcel.writeDouble(price)
         parcel.writeList(allergens)
+        parcel.writeList(options)
     }
 
     override fun describeContents(): Int {
