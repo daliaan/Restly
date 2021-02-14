@@ -13,7 +13,9 @@ import dalian.razvan.cucer.customViews.recyclerViews.category.CategoryAdapter
 import dalian.razvan.cucer.customViews.recyclerViews.restaurant.RestaurantAdapter
 import dalian.razvan.cucer.models.restaurant.Category
 import dalian.razvan.cucer.models.restaurant.Restaurant
+import kotlinx.android.synthetic.main.fragment_products.*
 import kotlinx.android.synthetic.main.fragment_restaurants.*
+import kotlinx.android.synthetic.main.fragment_restaurants.category_list
 import kotlinx.android.synthetic.main.restly_search_view.*
 import kotlinx.android.synthetic.main.restly_search_view.view.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
@@ -73,7 +75,12 @@ class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView, Text
     }
 
     override fun setCategoryList(list: ArrayList<Category>) {
-        categoriesAdapter.setList(list)
+        if (list.size == 0) {
+            category_list.visibility = View.GONE
+        } else {
+            category_list.visibility = View.VISIBLE
+            categoriesAdapter.setList(list)
+        }
     }
 
     override fun setRestaurantList(list: ArrayList<Restaurant>) {

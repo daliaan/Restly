@@ -11,6 +11,7 @@ import dalian.razvan.cucer.models.product.Product
 import dalian.razvan.cucer.models.restaurant.Category
 import dalian.razvan.cucer.models.restaurant.Restaurant
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
 class ProductsListViewModel(private val repository: ProductsRepository, private val restaurantsRepository: RestaurantsRepository): BaseViewModel() {
 
@@ -20,7 +21,7 @@ class ProductsListViewModel(private val repository: ProductsRepository, private 
     fun loadProducts(fragment: ProductsListFragmentView) {
         viewModelScope.launch {
             if (repository.getProductList().size > 0) {
-
+                getProducts(fragment)
             } else {
                 initRestaurantMenu(fragment)
             }
@@ -29,25 +30,27 @@ class ProductsListViewModel(private val repository: ProductsRepository, private 
 
     private fun initRestaurantMenu(fragment: ProductsListFragmentView) {
         viewModelScope.launch {
-            when(val response = repository.initRestaurantMenu()) {
-                is Result.Success -> {
-                    val initRestaurantMenuResponse = response.value
-                    initRestaurantMenuResponse?.let {
-                        if (it.isSuccessful) {
-                            repository.setCategoryList(it.initProductsResponseData.categories)
-                            repository.resetProductList(it.initProductsResponseData.productsResponseData.products)
+            restaurantsRepository.getSelectedRestaurant()?.let {
+                when(val response = repository.initRestaurantMenu(it.id)) {
+                    is Result.Success -> {
+                        val initRestaurantMenuResponse = response.value
+                        initRestaurantMenuResponse?.let {
+                            if (it.isSuccessful) {
+                                repository.setCategoryList(it.initProductsResponseData.categories)
+                                repository.resetProductList(it.initProductsResponseData.productsResponseData.products)
 
-                            repository.setCurrentPage(it.initProductsResponseData.productsResponseData.currentPage)
-                            repository.setTotalPages(it.initProductsResponseData.productsResponseData.totalPages)
+                                repository.setCurrentPage(it.initProductsResponseData.productsResponseData.currentPage)
+                                repository.setTotalPages(it.initProductsResponseData.productsResponseData.totalPages)
 
-                            fragment.setCategoryList(repository.getCategoryList())
-                            fragment.resetProductList(repository.getProductList())
-                        } else {
-                            fragment.showPopup(it.message + "")
+                                fragment.setCategoryList(repository.getCategoryList())
+                                fragment.resetProductList(repository.getProductList())
+                            } else {
+                                fragment.showPopup(it.message + "")
+                            }
                         }
+                    } else -> {
+                        fragment.showPopup(R.string.loading_products_failed)
                     }
-                } else -> {
-                    fragment.showPopup(R.string.loading_products_failed)
                 }
             }
         }
@@ -74,12 +77,19 @@ class ProductsListViewModel(private val repository: ProductsRepository, private 
         }
     }
 
-    private fun getProducts(fragment: ProductsListFragmentView) {
-
+    fun getProducts(fragment: ProductsListFragmentView) {
+        viewModelScope.launch {
+            restaurantsRepository.getSelectedRestaurant()?.let {
+//            when(val response = repository.getP)
+            }
+        }
     }
 
-    private fun loadNextProducts(fragment: ProductsListFragmentView) {
+    fun loadNextProducts(fragment: ProductsListFragmentView) {
         if (repository.getCurrentPage() + 1 < repository.getTotalPages())
             getProducts(fragment)
     }
+
+    fun getPreviouslyLoadedCategories(): ArrayList<Category> = repository.getCategoryList()
+    fun getPreviouslyLoadedProducts(): ArrayList<Product> = repository.getProductList()
 }

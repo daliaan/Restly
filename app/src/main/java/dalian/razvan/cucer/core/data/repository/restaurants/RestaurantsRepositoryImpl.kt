@@ -59,6 +59,8 @@ class RestaurantsRepositoryImpl(private val api: API): RestaurantsRepository {
         selectedRestaurant = restaurant
     }
 
+    override fun getSelectedRestaurant(): Restaurant? = selectedRestaurant
+
     private fun generatePageNumber(query: String, list: java.util.ArrayList<Int>): Int {
         if (!(query.isBlank() || query.isEmpty()) || list.size > 0)
             return 0

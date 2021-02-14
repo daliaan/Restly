@@ -21,7 +21,7 @@ class ProductViewHolder(itemView: View): BaseRecyclerViewHolder<Product>(itemVie
         itemView.setOnClickListener {
             onItemClick.onItemClick(item)
         }
-        itemView.product_price.text = item.price.toString()
+        itemView.product_price.text = "$ " + item.price.toString()
 
         itemView.allergen_list.layoutManager = LinearLayoutManager(itemView.context, LinearLayoutManager.HORIZONTAL, false)
         itemView.allergen_list.setHasFixedSize(false)

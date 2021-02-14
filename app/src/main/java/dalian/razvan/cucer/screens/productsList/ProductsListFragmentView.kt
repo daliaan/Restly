@@ -12,5 +12,8 @@ interface ProductsListFragmentView: BaseFragmentView {
     fun setProductList(productList: ArrayList<Product>)
     fun resetProductList(productList: ArrayList<Product>)
 
+    fun getQuery(): String
+    fun reset(): Boolean
+    fun resetConsumed()
     fun goToProductDetails()
 }

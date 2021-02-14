@@ -8,7 +8,8 @@ import dalian.razvan.cucer.models.restaurant.Restaurant
 
 interface ProductsRepository {
 
-    suspend fun initRestaurantMenu(): Result<InitProductsResponse?>
+    suspend fun initRestaurantMenu(restaurantId: Int): Result<InitProductsResponse?>
+    suspend fun getRestaurants(query: String, list: ArrayList<Int>)
 
     fun setProductList(list: ArrayList<Product>)
     fun resetProductList(list: ArrayList<Product>)
