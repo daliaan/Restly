@@ -2,7 +2,7 @@
     <string name="app_name">Restaurants</string>
     <string name="success">Operation successful.</string>
     <string name="restaurants_title"><![CDATA[Food & Drinks]]></string>
-    <string name="menu">Restaurant Menu</string>
+    <string name="menu">Menu</string>
     <string name="empty_string" />
     <string name="restaurant_or_product">Restaurant or product</string>
     <string name="clear">Clear</string>
@@ -10,4 +10,5 @@
     <string name="tab">Tab</string>
     <string name="account">Account</string>
     <string name="loading_restaurants_failed">Loading restaurant list from server failed.</string>
+    <string name="loading_products_failed">Loading products list from server failed.</string>
 </resources>

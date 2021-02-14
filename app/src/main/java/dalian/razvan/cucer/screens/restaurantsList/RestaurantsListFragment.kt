@@ -14,6 +14,7 @@ import dalian.razvan.cucer.customViews.recyclerViews.restaurant.RestaurantAdapte
 import dalian.razvan.cucer.models.restaurant.Category
 import dalian.razvan.cucer.models.restaurant.Restaurant
 import kotlinx.android.synthetic.main.fragment_restaurants.*
+import kotlinx.android.synthetic.main.restly_search_view.*
 import kotlinx.android.synthetic.main.restly_search_view.view.*
 import kotlinx.android.synthetic.main.toolbar_layout.*
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -62,7 +63,13 @@ class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView, Text
 
     override fun onResume() {
         super.onResume()
-        restaurantsViewModel.loadRestaurants(this)
+        if (wasPaused) {
+            wasPaused = false
+            categoriesAdapter.resetList(restaurantsViewModel.getPreviouslyLoadedCategories())
+            restaurantsAdapter.resetList(restaurantsViewModel.getPreviouslyLoadedRestaurants())
+        } else {
+            restaurantsViewModel.loadRestaurants(this)
+        }
     }
 
     override fun setCategoryList(list: ArrayList<Category>) {

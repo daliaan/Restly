@@ -47,8 +47,7 @@ class RestaurantsListViewModel(private var repository: RestaurantsRepository): B
                             fragment.showPopup(it.message + "")
                         }
                     }
-                }
-                else -> {
+                } else -> {
                     fragment.showPopup(R.string.loading_restaurants_failed)
                 }
             }
@@ -123,4 +122,7 @@ class RestaurantsListViewModel(private var repository: RestaurantsRepository): B
         if (repository.getCurrentPage() + 1 < repository.getTotalPages())
             getRestaurants(fragment)
     }
+
+    fun getPreviouslyLoadedRestaurants(): ArrayList<Restaurant> = repository.getRestaurantList()
+    fun getPreviouslyLoadedCategories(): ArrayList<Category> = repository.getCategoryList()
 }

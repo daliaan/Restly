@@ -10,12 +10,4 @@ class CategoryAdapter: BaseRecyclerViewAdapter<Category, CategoryViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder
         = CategoryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.category_cell, parent, false))
-
-    override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        holder.bind(getItem(position), itemClickListener)
-    }
-
-    override fun getItemCount(): Int = items.size
-
-    override fun getItem(position: Int): Category = items[position]
 }

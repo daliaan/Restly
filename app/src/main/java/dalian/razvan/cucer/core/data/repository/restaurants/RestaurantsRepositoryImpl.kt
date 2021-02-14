@@ -10,7 +10,7 @@ import dalian.razvan.cucer.core.data.sharedPrefs.SharedPrefs
 import dalian.razvan.cucer.models.restaurant.Category
 import dalian.razvan.cucer.models.restaurant.Restaurant
 
-class RestaurantsRepositoryImpl(var api: API): RestaurantsRepository {
+class RestaurantsRepositoryImpl(private val api: API): RestaurantsRepository {
 
     private val restaurants = arrayListOf<Restaurant>()
     private val categories = arrayListOf<Category>()

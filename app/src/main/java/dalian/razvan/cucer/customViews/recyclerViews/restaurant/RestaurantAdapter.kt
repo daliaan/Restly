@@ -10,12 +10,4 @@ class RestaurantAdapter: BaseRecyclerViewAdapter<Restaurant, RestaurantViewHolde
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RestaurantViewHolder
         = RestaurantViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.restaurant_cell, parent, false))
-
-    override fun onBindViewHolder(holder: RestaurantViewHolder, position: Int) {
-        holder.bind(getItem(position), itemClickListener)
-    }
-
-    override fun getItemCount(): Int = items.size
-
-    override fun getItem(position: Int): Restaurant = items[position]
 }

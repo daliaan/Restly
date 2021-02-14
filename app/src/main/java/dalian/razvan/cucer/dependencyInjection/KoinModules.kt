@@ -32,7 +32,7 @@ val viewModelModule = module {
     viewModel{ RestaurantsListViewModel(get()) }
     viewModel{ ProductsListViewModel(get(), get()) }
     viewModel{ CartViewModel(get()) }
-    viewModel{ ProductDetailsViewModel() }
+    viewModel{ ProductDetailsViewModel(get()) }
 }
 
 val networkModule = module {
