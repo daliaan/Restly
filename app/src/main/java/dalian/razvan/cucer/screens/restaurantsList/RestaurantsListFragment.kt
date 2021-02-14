@@ -54,7 +54,7 @@ class RestaurantsListFragment: BaseFragment(), RestaurantsListFragmentView, Text
         restaurant_list.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         restaurant_list.setHasFixedSize(true)
         restaurantsAdapter = RestaurantAdapter()
-        restaurantsAdapter.addItemClickListener(restaurantsViewModel.onRestaurantItemClick())
+        restaurantsAdapter.addItemClickListener(restaurantsViewModel.onRestaurantItemClick(this))
         restaurant_list.adapter = restaurantsAdapter
 
         restaurant_list.addOnScrollListener(onScrollListener)
