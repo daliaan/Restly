@@ -1,11 +1,13 @@
 package dalian.razvan.cucer.core.data.network
 
 import dalian.razvan.cucer.core.data.network.model.request.RestaurantsRequest
-import dalian.razvan.cucer.core.data.network.model.response.InitRestaurantsResponse
-import dalian.razvan.cucer.core.data.network.model.response.RestaurantsResponse
+import dalian.razvan.cucer.core.data.network.model.response.products.InitProductsResponse
+import dalian.razvan.cucer.core.data.network.model.response.restaurants.InitRestaurantsResponse
+import dalian.razvan.cucer.core.data.network.model.response.restaurants.RestaurantsResponse
 import dalian.razvan.cucer.core.data.repository.Endpoints
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface API {
@@ -14,4 +16,7 @@ interface API {
     suspend fun initiateRestaurants(): Response<InitRestaurantsResponse>
     @POST(Endpoints.GET_RESTAURANTS)
     suspend fun getRestaurants(@Body initRestaurants: RestaurantsRequest): Response<RestaurantsResponse>
+
+    @GET(Endpoints.INIT_RESTAURANT_MENU)
+    suspend fun initiateRestaurantMenu(): Response<InitProductsResponse>
 }

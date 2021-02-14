@@ -3,14 +3,14 @@ package dalian.razvan.cucer.core.data.repository.restaurants
 import dalian.razvan.cucer.core.data.network.API
 import dalian.razvan.cucer.core.data.network.Result
 import dalian.razvan.cucer.core.data.network.model.request.RestaurantsRequest
-import dalian.razvan.cucer.core.data.network.model.response.InitRestaurantsResponse
-import dalian.razvan.cucer.core.data.network.model.response.RestaurantsResponse
+import dalian.razvan.cucer.core.data.network.model.response.restaurants.InitRestaurantsResponse
+import dalian.razvan.cucer.core.data.network.model.response.restaurants.RestaurantsResponse
 import dalian.razvan.cucer.core.data.network.safeApiCall
 import dalian.razvan.cucer.core.data.sharedPrefs.SharedPrefs
 import dalian.razvan.cucer.models.restaurant.Category
 import dalian.razvan.cucer.models.restaurant.Restaurant
 
-class RestaurantsRepositoryImpl(var api: API, var sharedPrefs: SharedPrefs): RestaurantsRepository {
+class RestaurantsRepositoryImpl(var api: API): RestaurantsRepository {
 
     private val restaurants = arrayListOf<Restaurant>()
     private val categories = arrayListOf<Category>()

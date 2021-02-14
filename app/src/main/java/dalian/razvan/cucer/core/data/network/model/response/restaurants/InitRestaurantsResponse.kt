@@ -1,4 +1,4 @@
-package dalian.razvan.cucer.core.data.network.model.response
+package dalian.razvan.cucer.core.data.network.model.response.restaurants
 
 import com.google.gson.annotations.SerializedName
 

@@ -23,7 +23,7 @@ val useCaseModule = module {
 
 val repositoryModule = module {
     single { SharedPrefsImpl(androidContext()) as SharedPrefs }
-    single { RestaurantsRepositoryImpl(get(), get()) as RestaurantsRepository }
+    single { RestaurantsRepositoryImpl(get()) as RestaurantsRepository }
     single { ProductsRepositoryImpl(get(), get()) as ProductsRepository}
     single { CartRepositoryImpl(get()) as CartRepository }
 }

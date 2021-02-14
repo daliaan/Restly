@@ -1,9 +1,7 @@
-package dalian.razvan.cucer.core.data.network.model.response
+package dalian.razvan.cucer.core.data.network.model.response.restaurants
 
-import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import dalian.razvan.cucer.models.restaurant.Category
-import java.util.*
 import kotlin.collections.ArrayList
 
 data class InitRestaurantsResponseData(@SerializedName("restaurantFirstPage") val restaurantsResponseData: RestaurantsResponseData,
