@@ -3,12 +3,13 @@ package dalian.razvan.cucer.models.restaurant
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import dalian.razvan.cucer.core.baseClasses.BaseModel
 
 data class Restaurant(@SerializedName("categories") val categoriesString: String = "",
                       @SerializedName("rating") val rating: Double = 0.0,
                       @SerializedName("id") val id: Int = 0,
                       @SerializedName("title") val title: String = "",
-                      @SerializedName("imageUrl") val imageUrl: String = ""): Parcelable {
+                      @SerializedName("imageUrl") val imageUrl: String = ""): BaseModel(), Parcelable {
     var categoriesList = arrayListOf<String>()
 
     init {
