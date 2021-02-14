@@ -17,4 +17,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:id="@+id/product_list"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/raise_hand"
+        android:src="@drawable/raise_hand"
+        android:scaleType="centerCrop"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

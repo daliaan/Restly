@@ -56,6 +56,41 @@ class ProductsListViewModel(private val repository: ProductsRepository, private 
         }
     }
 
+    fun getProducts(fragment: ProductsListFragmentView) {
+        viewModelScope.launch {
+            restaurantsRepository.getSelectedRestaurant()?.let {
+                when(val response = repository.getProducts(fragment.getQuery(), getSelectedCategoriesIds(), it.id)) {
+                    is Result.Success -> {
+                        val getProductsResponse = response.value
+                        getProductsResponse?.let { productsResponse ->
+                            if (productsResponse.isSuccessful) {
+                                if (productsResponse.productsResponseData.products.size > 0) {
+                                    if (reset || fragment.reset()) {
+                                        reset = false
+                                        fragment.resetConsumed()
+                                        repository.resetProductList(productsResponse.productsResponseData.products)
+                                        fragment.resetProductList(productsResponse.productsResponseData.products)
+                                    } else {
+                                        repository.setProductList(productsResponse.productsResponseData.products)
+                                        fragment.setProductList(productsResponse.productsResponseData.products)
+                                    }
+
+                                    repository.setCurrentPage(productsResponse.productsResponseData.currentPage)
+                                    repository.setTotalPages(productsResponse.productsResponseData.totalPages)
+                                }
+                            } else {
+                                fragment.showPopup(productsResponse.message + "")
+                            }
+                        }
+                    }
+                    else -> {
+                        fragment.showPopup(R.string.loading_products_failed)
+                    }
+                }
+            }
+        }
+    }
+
     fun onCategoryItemClick(fragment: ProductsListFragmentView): RecyclerViewItemClickListener<Category>  = object: RecyclerViewItemClickListener<Category> {
         override fun onItemClick(item: Category) {
             reset = true
@@ -77,12 +112,14 @@ class ProductsListViewModel(private val repository: ProductsRepository, private 
         }
     }
 
-    fun getProducts(fragment: ProductsListFragmentView) {
-        viewModelScope.launch {
-            restaurantsRepository.getSelectedRestaurant()?.let {
-//            when(val response = repository.getP)
-            }
+    private fun getSelectedCategoriesIds(): ArrayList<Int> {
+        val ids = arrayListOf<Int>()
+
+        for (i in 0 until selectedCategories.size) {
+            ids.add(selectedCategories[i].id)
         }
+
+        return ids
     }
 
     fun loadNextProducts(fragment: ProductsListFragmentView) {
@@ -92,4 +129,8 @@ class ProductsListViewModel(private val repository: ProductsRepository, private 
 
     fun getPreviouslyLoadedCategories(): ArrayList<Category> = repository.getCategoryList()
     fun getPreviouslyLoadedProducts(): ArrayList<Product> = repository.getProductList()
+
+    fun raisedHand() {
+
+    }
 }

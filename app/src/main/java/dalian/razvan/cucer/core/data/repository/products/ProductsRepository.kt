@@ -2,6 +2,7 @@ package dalian.razvan.cucer.core.data.repository.products
 
 import dalian.razvan.cucer.core.data.network.Result
 import dalian.razvan.cucer.core.data.network.model.response.products.InitProductsResponse
+import dalian.razvan.cucer.core.data.network.model.response.products.ProductsResponse
 import dalian.razvan.cucer.models.product.Product
 import dalian.razvan.cucer.models.restaurant.Category
 import dalian.razvan.cucer.models.restaurant.Restaurant
@@ -9,7 +10,7 @@ import dalian.razvan.cucer.models.restaurant.Restaurant
 interface ProductsRepository {
 
     suspend fun initRestaurantMenu(restaurantId: Int): Result<InitProductsResponse?>
-    suspend fun getRestaurants(query: String, list: ArrayList<Int>)
+    suspend fun getProducts(query: String, list: ArrayList<Int>, restaurantId: Int): Result<ProductsResponse?>
 
     fun setProductList(list: ArrayList<Product>)
     fun resetProductList(list: ArrayList<Product>)
